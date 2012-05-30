@@ -435,7 +435,7 @@ awful.rules.rules = {
       callback = awful.client.setslave},
     { rule = { class = "Pidgin", role = "conversation"},
       properties = { tag = tags[1][3] } },
-    { rule = { name = "duracell999 - Skype.*" },
+    { rule = { class = "Skype" },
       properties = { tag = tags[1][4] },
       callback = awful.client.setslave},
     { rule = { class = "Thunderbird" },
