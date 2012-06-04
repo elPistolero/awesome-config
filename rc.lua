@@ -15,6 +15,7 @@ require("vicious")
 
 -- {{{ auto start
 awful.util.spawn_with_shell("nm-applet")
+awful.util.spawn_with_shell("gnome-sound-applet")
 awful.util.spawn_with_shell("dropbox start")
 awful.util.spawn_with_shell("kupfer --no-splash")
 -- }}}
@@ -82,14 +83,13 @@ layouts =
 -- Define a tag table which hold all screen tags.
 tags = {
     names = { "main", "www", "im", "skype", "mail", "video", "QtCreator", "OpenFlipper", "music"},
-    layout = { layouts[2], layouts[10], layouts[3], layouts[3], layouts[3], layouts[10], layouts[2], layouts[10], layouts[10] }
+    layout = { layouts[2], layouts[10], layouts[3], layouts[1], layouts[3], layouts[10], layouts[2], layouts[10], layouts[10] }
 }
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
     -- tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
     tags[s] = awful.tag(tags.names, s, tags.layout)
     awful.tag.setproperty(tags[s][3], "mwfact", 0.85)
-    awful.tag.setproperty(tags[s][4], "mwfact", 0.85)
 end
 -- }}}
 
@@ -118,48 +118,48 @@ separator = widget({ type = "textbox" })
 separator.text = " :: "
 -- Volume widget
 
-volumecfg = {}
-volumecfg.cardid  = 0
-volumecfg.channel = "Master"
-volumecfg.widget = widget({ type = "textbox", name = "volumecfg.widget", align = "right" })
+--volumecfg = {}
+--volumecfg.cardid  = 0
+--volumecfg.channel = "Master"
+--volumecfg.widget = widget({ type = "textbox", name = "volumecfg.widget", align = "right" })
 
-volumecfg_t = awful.tooltip({ objects = { volumecfg.widget },})
-volumecfg_t:set_text("Volume")
+--volumecfg_t = awful.tooltip({ objects = { volumecfg.widget },})
+--volumecfg_t:set_text("Volume")
 
--- command must start with a space!
-volumecfg.mixercommand = function (command)
-       local fd = io.popen("amixer -c " .. volumecfg.cardid .. command)
-       local status = fd:read("*all")
-       fd:close()
+---- command must start with a space!
+--volumecfg.mixercommand = function (command)
+       --local fd = io.popen("amixer -c " .. volumecfg.cardid .. command)
+       --local status = fd:read("*all")
+       --fd:close()
 
-       local volume = string.match(status, "(%d?%d?%d)%%")
-       volume = string.format("vol:%3d", volume)
-       status = string.match(status, "%[(o[^%]]*)%]")
-       if string.find(status, "on", 1, true) then
-               volume = volume .. "%"
-       else
-               volume = volume .. "M"
-       end
-       volumecfg.widget.text = volume
-end
-volumecfg.update = function ()
-       volumecfg.mixercommand(" sget " .. volumecfg.channel)
-end
-volumecfg.up = function ()
-       volumecfg.mixercommand(" sset " .. volumecfg.channel .. " 1%+")
-end
-volumecfg.down = function ()
-       volumecfg.mixercommand(" sset " .. volumecfg.channel .. " 1%-")
-end
-volumecfg.toggle = function ()
-       volumecfg.mixercommand(" sset " .. volumecfg.channel .. " toggle")
-end
-volumecfg.widget:buttons({
-       button({ }, 4, function () volumecfg.up() end),
-       button({ }, 5, function () volumecfg.down() end),
-       button({ }, 1, function () volumecfg.toggle() end)
-})
-volumecfg.update()
+       --local volume = string.match(status, "(%d?%d?%d)%%")
+       --volume = string.format("vol:%3d", volume)
+       --status = string.match(status, "%[(o[^%]]*)%]")
+       --if string.find(status, "on", 1, true) then
+               --volume = volume .. "%"
+       --else
+               --volume = volume .. "M"
+       --end
+       --volumecfg.widget.text = volume
+--end
+--volumecfg.update = function ()
+       --volumecfg.mixercommand(" sget " .. volumecfg.channel)
+--end
+--volumecfg.up = function ()
+       --volumecfg.mixercommand(" sset " .. volumecfg.channel .. " 1%+")
+--end
+--volumecfg.down = function ()
+       --volumecfg.mixercommand(" sset " .. volumecfg.channel .. " 1%-")
+--end
+--volumecfg.toggle = function ()
+       --volumecfg.mixercommand(" sset " .. volumecfg.channel .. " toggle")
+--end
+--volumecfg.widget:buttons({
+       --button({ }, 4, function () volumecfg.up() end),
+       --button({ }, 5, function () volumecfg.down() end),
+       --button({ }, 1, function () volumecfg.toggle() end)
+--})
+--volumecfg.update()
 -- Network usage widget
 -- Initialize widget
 netwidget = widget({ type = "textbox" })
@@ -259,8 +259,6 @@ for s = 1, screen.count() do
         memwidget,
         separator,
         cpuwidget,
-        separator,
-        volumecfg.widget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -437,8 +435,7 @@ awful.rules.rules = {
     { rule = { class = "Pidgin", role = "conversation"},
       properties = { tag = tags[1][3] } },
     { rule = { class = "Skype" },
-      properties = { tag = tags[1][4] },
-      callback = awful.client.setslave},
+      properties = { tag = tags[1][4] },},
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][5] } },
     { rule = { class = "Vlc" },
