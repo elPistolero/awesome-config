@@ -14,6 +14,7 @@ require("debian.menu")
 require("vicious")
 
 -- {{{ auto start
+awful.util.spawn_with_shell("nm-applet")
 awful.util.spawn_with_shell("dropbox start")
 awful.util.spawn_with_shell("kupfer --no-splash")
 -- }}}
