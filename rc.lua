@@ -14,6 +14,8 @@ require("debian.menu")
 require("vicious")
 
 -- {{{ auto start
+awful.util.spawn_with_shell("xset -dpms")
+awful.util.spawn_with_shell("xset s off")
 awful.util.spawn_with_shell("nm-applet")
 awful.util.spawn_with_shell("gnome-sound-applet")
 awful.util.spawn_with_shell("dropbox start")
