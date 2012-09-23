@@ -67,17 +67,16 @@ modkey = "Mod4"
 layouts =
 {
     awful.layout.suit.floating,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    --awful.layout.suit.tile,
+    --awful.layout.suit.tile.left,
+    --awful.layout.suit.tile.bottom,
+    --awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    --awful.layout.suit.fair.horizontal,
+    --awful.layout.suit.spiral,
+    --awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
+    awful.layout.suit.max.fullscreen
 }
 -- }}}
 
@@ -85,7 +84,7 @@ layouts =
 -- Define a tag table which hold all screen tags.
 tags = {
     names = { "main", "www", "im", "skype", "mail", "video", "QtCreator", "OpenFlipper", "music"},
-    layout = { layouts[2], layouts[10], layouts[3], layouts[1], layouts[3], layouts[10], layouts[2], layouts[10], layouts[10] }
+    layout = { layouts[2], layouts[3], layouts[2], layouts[1], layouts[2], layouts[4], layouts[2], layouts[1], layouts[3] }
 }
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
@@ -432,14 +431,14 @@ awful.rules.rules = {
         awful.client.movetotag(tags[mouse.screen][awful.tag.getidx()], c)
       end},
     { rule = { class = "Pidgin", role = "buddy_list"},
-      properties = { tag = tags[1][3] },
+      properties = { tag = tags[2][3] },
       callback = awful.client.setslave},
     { rule = { class = "Pidgin", role = "conversation"},
-      properties = { tag = tags[1][3] } },
+      properties = { tag = tags[2][3] } },
     { rule = { class = "Skype" },
-      properties = { tag = tags[1][4] },},
+      properties = { tag = tags[2][4] },},
     { rule = { class = "Thunderbird" },
-      properties = { tag = tags[1][5] } },
+      properties = { tag = tags[2][5] } },
     { rule = { class = "Vlc" },
       properties = { tag = tags[1][6] } },
     { rule = { class = "Qtcreator" },
@@ -447,7 +446,7 @@ awful.rules.rules = {
     { rule = { class = "OpenFlipper" },
       properties = { tag = tags[2][8] } },
     { rule = { class = "Rhythmbox" },
-      properties = { tag = tags[1][9] } },
+      properties = { tag = tags[2][9] } },
 }
 -- }}}
 
